@@ -75,6 +75,8 @@ Or you can require it to the existing project using a command:
 
     php new_task.php "A very hard task which takes two seconds.."
     php worker.php
+    
+    Colas durable true, tanto al consumer como al producer
 
 
 [Tutorial three: Publish/Subscribe](https://www.rabbitmq.com/tutorials/tutorial-three-php.html)

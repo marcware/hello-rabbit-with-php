@@ -7,7 +7,14 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
 $channel = $connection->channel();
 
-$channel->queue_declare('task_queue', false, true, false, false);
+//MARCAMOS DURABLE
+$channel->queue_declare(
+    'task_queue',
+    false,
+    true,// RABBIT NO BORRARÁ LOS MENSAJES SI TIENE PROBLEMAS
+    false,
+    false
+);
 
 echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
@@ -18,8 +25,10 @@ $callback = function ($msg) {
     $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
 };
 
+//SOLO SE VA A DEJAR UN MENSAJE PARA QUE LO CONSUMA UN consumer
 $channel->basic_qos(null, 1, null);
 
+//AVISAR A RABBIT QUE SE HA CONSUMIDO EL MENSAJE
 $channel->basic_consume(
     'task_queue',
     '',

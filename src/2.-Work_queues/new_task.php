@@ -8,7 +8,13 @@ use PhpAmqpLib\Message\AMQPMessage;
 $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
 $channel = $connection->channel();
 
-$channel->queue_declare('task_queue', false, true, false, false);
+$channel->queue_declare(
+    'task_queue',
+    false,
+    true, //LA COLA ESTÁ CREADA COMO durable
+    false,
+    false
+);
 
 $data = implode(' ', array_slice($argv, 1));
 
@@ -16,6 +22,7 @@ if (empty($data)) {
     $data = "Hello World!";
 }
 
+// MARCAMOS EL MENSAJE COMO modo de entrega persistente
 $msg = new AMQPMessage(
     $data,
     array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
