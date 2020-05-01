@@ -14,4 +14,4 @@ COPY ./docker/config/php.ini /usr/local/etc/php/php.ini
 
 RUN docker-php-ext-install bcmath
 
-COPY ./src /var/www/html
+#COPY ./src /var/www/html
