@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: bizmate
- * Date: 10/02/2018
- * Time: 20:59
- */
 
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
