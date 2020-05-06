@@ -6,6 +6,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
 $channel = $connection->channel();
 
+//DECLARAMOS EL TIPO DE EXCHANGE
 $channel->exchange_declare(
     'logs',
     'fanout',
@@ -45,5 +46,6 @@ while ($channel->is_consuming()) {
 }
 
 $channel->close();
+
 $connection->close();
 
