@@ -16,8 +16,7 @@ services:
   php_sender:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
-    user: $UID
+      dockerfile: docker/php_sender/Dockerfile
     ports:
       - "9000"
     volumes:
@@ -28,13 +27,12 @@ services:
       - composer
 
   php_receiver:
-    #image: phpdockerio/php71-cli
     build:
       context: .
       dockerfile: docker/php_receiver/Dockerfile
-    command: "php /app/receive.php"
+    command: "php /var/www/html/1.-Hello_World/receive.php"
     volumes:
-      - ./src:/app
+      - ./src:/var/www/html
     depends_on:
       composer:
         condition: service_started
@@ -44,7 +42,6 @@ services:
       - rabbitmq
    # scale: 5
 
-#https://stackoverflow.com/questions/31746182/docker-compose-wait-for-container-x-before-starting-y
   rabbitmq:
 #    image: rabbitmq
     build:
@@ -63,7 +60,6 @@ services:
 
   composer:
     image: composer
-    user: $UID
     volumes:
       - ./src:/app
     command: composer install --ignore-platform-reqs

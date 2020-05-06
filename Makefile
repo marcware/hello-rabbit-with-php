@@ -1,12 +1,19 @@
 SHELL := /usr/bin/env bash
-up:
-	export UID && docker-compose up -d
 
-down:
+docker-build:
+	docker-compose build
+
+docker-up:
+	docker-compose up -d && docker-compose ps
+
+docker-stop:
+	docker-compose stop
+
+docker-down:
 	docker-compose down -v
 
 bash:
-	export UID && docker-compose run php_sender bash
+	docker-compose run php_sender bash
 
 push_jobs:
 	docker-compose exec php_sender sh -c 'while true; do php send.php; done;'
@@ -14,7 +21,7 @@ push_jobs:
 push_job:
 	docker-compose exec php_sender sh -c 'php send.php;'
 
-docker_clean:
+docker-clean:
 	# docker rm $(docker ps -a -q) || true
 	# docker rmi < echo $(docker images -q | tr "\n" " ")
 
@@ -22,8 +29,7 @@ tail:
 	docker-compose logs -f
 
 docker-ssh-php-receiver:
-	docker exec -it rabbit-php-docker_php_receiver_1 bash
-
+	docker exec -it rabbit-php-docker_php_receiver_1 sh
 
 docker-ssh-php-sender:
 	docker-compose exec php_sender sh

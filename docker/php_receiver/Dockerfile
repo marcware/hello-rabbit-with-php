@@ -1,7 +1,6 @@
-FROM phpdockerio/php71-cli
-MAINTAINER Diego Gullo <diego_gullo@bizmate.biz>
+FROM php:7.1.33-fpm
 
-RUN apt-get update && apt-get install -y  php7.1-bcmath
+## RUN apt-get update && apt-get install -y  php7.1-bcmath
 #\
 #	&& docker-php-ext-install curl \
 #	&& apt-get clean \
@@ -13,3 +12,6 @@ RUN apt-get update && apt-get install -y  php7.1-bcmath
 # RUN docker-php-ext-install bcmath
 
 COPY ./docker/php_receiver/bcmath.ini /etc/php/7.1/cli/conf.d/20-bcmath.ini
+USER 1000:1000
+
+WORKDIR /var/www/html
