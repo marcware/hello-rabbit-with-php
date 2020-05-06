@@ -25,6 +25,7 @@ if (empty($data)) {
 // MARCAMOS EL MENSAJE COMO modo de entrega persistente
 $msg = new AMQPMessage(
     $data,
+    //MARCAMOS MENSAJES COMO PERSISTENTES
     array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
 );
 
