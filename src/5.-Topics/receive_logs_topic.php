@@ -6,9 +6,19 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 $connection = new AMQPStreamConnection('rabbitmq', 5672, 'guest', 'guest');
 $channel = $connection->channel();
 
-$channel->exchange_declare('topic_logs', 'topic', false, false, false);
+$channel->exchange_declare(
+    'topic_logs',
+    'topic',
+    false,
+    false,
+    false);
 
-list($queue_name, ,) = $channel->queue_declare("", false, false, true, false);
+list($queue_name, ,) = $channel->queue_declare(
+    "",
+    false,
+    false,
+    true,
+    false);
 
 $binding_keys = array_slice($argv, 1);
 if (empty($binding_keys)) {
@@ -26,7 +36,14 @@ $callback = function ($msg) {
     echo ' [x] ', $msg->delivery_info['routing_key'], ':', $msg->body, "\n";
 };
 
-$channel->basic_consume($queue_name, '', false, true, false, false, $callback);
+$channel->basic_consume(
+    $queue_name,
+    '',
+    false,
+    true,
+    false,
+    false,
+    $callback);
 
 while ($channel->is_consuming()) {
     $channel->wait();
@@ -34,4 +51,4 @@ while ($channel->is_consuming()) {
 
 $channel->close();
 $connection->close();
-?>
+
