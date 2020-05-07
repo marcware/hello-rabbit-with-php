@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '../../vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -15,7 +15,7 @@ class FibonacciRpcClient
     public function __construct()
     {
         $this->connection = new AMQPStreamConnection(
-            'localhost',
+            'rabbitmq',
             5672,
             'guest',
             'guest'
@@ -72,4 +72,4 @@ class FibonacciRpcClient
 $fibonacci_rpc = new FibonacciRpcClient();
 $response = $fibonacci_rpc->call(30);
 echo ' [.] Got ', $response, "\n";
-?>
+
