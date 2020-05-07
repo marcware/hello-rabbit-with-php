@@ -23,6 +23,7 @@ list($queue_name, ,) = $channel->queue_declare(
         false
 );
 
+//ROUTING KEYS QUE VAMOS A OBTENER.
 $severities = array_slice($argv, 1);
 if (empty($severities)) {
     file_put_contents('php://stderr', "Usage: $argv[0] [info] [warning] [error]\n");

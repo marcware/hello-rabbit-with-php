@@ -19,6 +19,7 @@ $channel->exchange_declare(
     false
 );
 
+//ROUTING KEY que le pasamos al comando
 $severity = isset($argv[1]) && !empty($argv[1]) ? $argv[1] : 'info';
 
 $data = implode(' ', array_slice($argv, 2));
